@@ -37,7 +37,7 @@ APP_INC += -I$(ESP_IDF_COMP_PATH)/mbedtls/port/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/driver/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/driver/include/driver
 APP_INC += -I$(ESP_IDF_COMP_PATH)/heap/include
-APP_INC += -I$(ESP_IDF_COMP_PATH)/
+APP_INC += -I$(ESP_IDF_COMP_PATH)/esp32
 APP_INC += -I$(ESP_IDF_COMP_PATH)/esp32/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/esp_ringbuf/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/esp_event/include
@@ -590,6 +590,8 @@ FLASH_SIZE = detect
 ESPFLASHFREQ = 80m
 ESPFLASHMODE = dio
 
+PYTHON=python2
+
 PIC_TOOL = $(PYTHON) tools/pypic.py --port $(ESPPORT)
 ENTER_FLASHING_MODE = $(PIC_TOOL) --enter
 EXIT_FLASHING_MODE = $(PIC_TOOL) --exit
@@ -598,7 +600,7 @@ ESP_UPDATER_PY = $(PYTHON) ./tools/fw_updater/updater.py
 ESPTOOLPY = $(PYTHON) $(IDF_PATH)/components/esptool_py/esptool/esptool.py --chip esp32
 ESPRESET ?= --before default_reset --after no_reset
 ESPTOOLPY_SERIAL = $(ESPTOOLPY) --port $(ESPPORT) --baud $(ESPBAUD) $(ESPRESET)
-ESP_UPDATER_PY_SERIAL = $(ESP_UPDATER_PY) --port $(ESPPORT) --speed $(ESPBAUD)
+ESP_UPDATER_PY_SERIAL = $(ESP_UPDATER_PY) --port $(ESPPORT) --speed $(ESPBAUD) --reset
 BOARD_L = `echo $(BOARD) | tr '[IOY]' '[ioy]'`
 SW_VERSION = `cat pycom_version.h |grep SW_VERSION_NUMBER | cut -d'"' -f2`
 ESPTOOLPY_WRITE_FLASH  = $(ESPTOOLPY_SERIAL) write_flash -z --flash_mode $(ESPFLASHMODE) --flash_freq $(ESPFLASHFREQ) --flash_size $(FLASH_SIZE)
