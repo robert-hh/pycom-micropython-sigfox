@@ -37,7 +37,7 @@ APP_INC += -I$(ESP_IDF_COMP_PATH)/mbedtls/port/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/driver/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/driver/include/driver
 APP_INC += -I$(ESP_IDF_COMP_PATH)/heap/include
-APP_INC += -I$(ESP_IDF_COMP_PATH)/esp32
+APP_INC += -I$(ESP_IDF_COMP_PATH)/
 APP_INC += -I$(ESP_IDF_COMP_PATH)/esp32/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/esp_ringbuf/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/esp_event/include
@@ -531,6 +531,9 @@ BOOT_BIN = $(BUILD)/bootloader/bootloader.bin
 
 ifeq ($(BOARD), WIPY)
     APP_BIN = $(BUILD)/wipy.bin
+endif
+ifeq ($(BOARD), ESP32)
+    APP_BIN = $(BUILD)/esp32.bin
 endif
 ifeq ($(BOARD), LOPY)
     APP_BIN = $(BUILD)/lopy.bin
