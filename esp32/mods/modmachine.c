@@ -403,6 +403,14 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_0(machine_idle_obj, machine_idle);
 STATIC mp_obj_t machine_sleep (uint n_args, const mp_obj_t *arg) {
 
     bool reconnect = false;
+    int64_t sleep_time = 1000; // Safe default value, just to silence compiler warnings
+    
+    if (n_args > 0) {
+        sleep_time = (int64_t)mp_obj_get_int_truncated(arg[0]) * 1000;
+        if (sleep_time <= 0) {
+            return mp_const_none;
+        }
+    }
 
 #if defined(FIPY) || defined(GPY)
     if (lteppp_get_modem_conn_state() < E_LTE_MODEM_DISCONNECTED) {
@@ -426,7 +434,6 @@ STATIC mp_obj_t machine_sleep (uint n_args, const mp_obj_t *arg) {
     }
     else
     {
-        int64_t sleep_time = (int64_t)mp_obj_get_int_truncated(arg[0]) * 1000;
         struct timeval tv;
         gettimeofday(&tv, NULL);
         mach_expected_wakeup_time = (int64_t)((tv.tv_sec * 1000000ull) + tv.tv_usec) + sleep_time;
