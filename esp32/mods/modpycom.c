@@ -742,7 +742,9 @@ STATIC mp_obj_t mod_pycom_get_free_heap (void) {
     size_t heap_psram_free = 0;
     mp_obj_t items[2];
 
-    if (esp32_get_chip_rev() > 0) {
+//    if (esp32_get_chip_rev() > 0) {
+    if (esp32_get_spiram_size() >= 4194304) {
+
         heap_psram_free = heap_caps_get_free_size(MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     }
     items[0] = mp_obj_new_int(heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));

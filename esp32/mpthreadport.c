@@ -53,6 +53,8 @@
 #include  "py/gc.h"
 
 #include "mpirq.h"
+#include "esp32chipinfo.h"
+
 
 #if MICROPY_PY_THREAD
 
@@ -169,7 +171,7 @@ void mp_thread_create_ex(void *(*entry)(void*), void *arg, size_t *stack_size, i
     thread_t *th;
 
     // allocate TCB, stack and linked-list node (must be outside thread_mutex lock)
-    if (mp_chip_revision > 0) {
+    if (esp32_get_spiram_size() >= 4194304) {
         // for revision 1 devices we allocate from the internal memory of the malloc heap
         tcb = malloc(sizeof(StaticTask_t));
         if (!tcb) {
@@ -260,7 +262,7 @@ void vPortCleanUpTCB (void *tcb) {
                 thread = th->next;
             }
             // explicitly release all its memory
-            if (mp_chip_revision > 0) {
+             if (esp32_get_spiram_size() >= 4194304) {
                 free(th->tcb);
                 free(th->stack);
                 free(th);

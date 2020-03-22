@@ -12,5 +12,7 @@
 
 extern void esp32_init_chip_info(void);
 extern uint8_t esp32_get_chip_rev(void);
+extern uint32_t esp32_get_spiram_size(void);
+extern uint32_t esp32_get_flash_size(void);
 
 #endif /* ESP32_UTIL_ESP32CHIPINFO_H_ */

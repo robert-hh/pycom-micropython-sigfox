@@ -47,7 +47,7 @@ DRESULT sflash_disk_init (void) {
 
     if (!sflash_init_done) {
         // this is how we diferentiate flash sizes in Pycom modules
-        if (esp32_get_chip_rev() > 0) {
+        if (spi_flash_get_chip_size() > (4* 1024 * 1024)) {
             sflash_start_address = SFLASH_START_ADDR_8MB;
             sflash_fs_sector_count = SFLASH_FS_SECTOR_COUNT_8MB;
         } else {
