@@ -534,6 +534,14 @@ ifeq ($(BOARD), WIPY)
 endif
 ifeq ($(BOARD), ESP32)
     APP_BIN = $(BUILD)/esp32.bin
+	CFLAGS += -DESP32_GENERIC
+# set FLASH size set by make parameter.
+	ifeq ($(FLASH_SIZE), 8MB)
+		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x800000
+	endif
+	ifeq ($(FLASH_SIZE), 4MB)
+		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x400000
+	endif
 endif
 ifeq ($(BOARD), LOPY)
     APP_BIN = $(BUILD)/lopy.bin
@@ -586,9 +594,9 @@ APP_BIN_ENCRYPT_2_4MB = $(APP_BIN)_enc_0x1C0000
 ESPPORT ?= /dev/ttyUSB0
 ESPBAUD ?= 921600
 
-FLASH_SIZE = detect
-ESPFLASHFREQ = 80m
-ESPFLASHMODE = dio
+FLASH_SIZE ?= detect
+ESPFLASHFREQ ?= 80m
+ESPFLASHMODE ?= dio
 
 PYTHON=python2
 

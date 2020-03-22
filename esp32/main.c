@@ -82,6 +82,7 @@ StackType_t *mpTaskStack;
 
 // board configuration options from mpconfigboard.h
 uint32_t micropy_hw_flash_size;
+// uint32_t micropy_hw_spiram_size;
 
 uint32_t micropy_hw_antenna_diversity_pin_num;
 
@@ -154,12 +155,18 @@ void app_main(void) {
     mperror_pre_init();
 #endif
 
-    // differentiate the Flash Size (either 8MB or 4MB) based on ESP32 rev id
-    micropy_hw_flash_size = (esp32_get_chip_rev() > 0 ? 0x800000 : 0x400000);
+    // printf("Flash size reported by esp_idf: 0x%x\n", spi_flash_get_chip_size());
 
+    micropy_hw_flash_size = esp32_get_flash_size();
     // propagating the Flash Size in the global variable (used in multiple IDF modules)
+    // after that spi_flash_get_chip_size() will report what was set here.
     g_rom_flashchip.chip_size = micropy_hw_flash_size;
 
+    // printf("Flash size set: 0x%x\n", micropy_hw_flash_size);
+    // printf("SPI RAM size : 0x%x\n", esp32_get_spiram_size());
+    // printf("Reported Chip revision : %d\n", esp32_get_chip_rev());
+
+#ifndef ESP32_GENERIC
     if (esp32_get_chip_rev() > 0) {
         micropy_hw_antenna_diversity_pin_num = MICROPY_SECOND_GEN_ANT_SELECT_PIN_NUM;
 
@@ -172,14 +179,6 @@ void app_main(void) {
         micropy_lpwan_dio_pin_index = 2;
         micropy_lpwan_dio_pin_num = 23;
         micropy_lpwan_dio_pin = &pin_GPIO23;
-
-        mpTaskStack = malloc(MICROPY_TASK_STACK_SIZE_PSRAM);
-
-        // create the MicroPython task
-        mpTaskHandle =
-        (TaskHandle_t)xTaskCreateStaticPinnedToCore(TASK_Micropython, "MicroPy", (MICROPY_TASK_STACK_SIZE_PSRAM / sizeof(StackType_t)), NULL,
-                                                    MICROPY_TASK_PRIORITY, mpTaskStack, &mpTaskTCB, 1);
-
     } else {
         micropy_hw_antenna_diversity_pin_num = MICROPY_FIRST_GEN_ANT_SELECT_PIN_NUM;
 
@@ -195,8 +194,18 @@ void app_main(void) {
         micropy_lpwan_dio_pin_index = 2;
         micropy_lpwan_dio_pin_num = 23;
         micropy_lpwan_dio_pin = &pin_GPIO23;
+    }
+#endif
 
-        mpTaskStack = malloc(MICROPY_TASK_STACK_SIZE);
+    if (esp32_get_spiram_size() >= 4194304) {
+        mpTaskStack = malloc(MICROPY_TASK_STACK_SIZE_PSRAM);
+
+        // create the MicroPython task
+        mpTaskHandle =
+        (TaskHandle_t)xTaskCreateStaticPinnedToCore(TASK_Micropython, "MicroPy", (MICROPY_TASK_STACK_SIZE_PSRAM / sizeof(StackType_t)), NULL,
+                                                    MICROPY_TASK_PRIORITY, mpTaskStack, &mpTaskTCB, 1);
+    } else {
+        mpTaskStack = heap_caps_malloc(MICROPY_TASK_STACK_SIZE, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
 
         // create the MicroPython task
         mpTaskHandle =

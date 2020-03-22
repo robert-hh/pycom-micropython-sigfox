@@ -19,6 +19,7 @@
 #define MICROPY_HW_FLASH_SIZE                                   (4 * 1024 * 1024)
 
 extern uint32_t micropy_hw_flash_size;
+extern uint32_t micropy_hw_spiram_size;
 
 extern uint32_t micropy_hw_antenna_diversity_pin_num;
 

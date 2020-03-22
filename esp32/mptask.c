@@ -166,7 +166,7 @@ void TASK_Micropython (void *pvParameters) {
 
     uint8_t chip_rev = esp32_get_chip_rev();
 
-    if (chip_rev > 0) {
+    if (esp32_get_spiram_size() >= 4194304) {
         stack_len = (MICROPY_TASK_STACK_SIZE_PSRAM / sizeof(StackType_t));
     } else {
         stack_len = (MICROPY_TASK_STACK_SIZE / sizeof(StackType_t));
@@ -196,7 +196,7 @@ void TASK_Micropython (void *pvParameters) {
     // to recover from hiting the limit (the limit is measured in bytes)
     mp_stack_set_limit(stack_len - 1024);
 
-    if (esp32_get_chip_rev() > 0) {
+    if (esp32_get_spiram_size() >= 4194304) {
         gc_pool_size = GC_POOL_SIZE_BYTES_PSRAM;
     } else {
         gc_pool_size = GC_POOL_SIZE_BYTES;
