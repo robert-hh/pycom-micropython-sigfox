@@ -312,7 +312,7 @@ APP_ETHERNET_SRC_C = $(addprefix mods/,\
 	)
 
 APP_SX1272_SRC_C = $(addprefix drivers/sx127x/,\
-	sx1272/sx1272.c \
+	sx1276/sx1276.c \
 	)
 
 APP_SX1276_SRC_C = $(addprefix drivers/sx127x/,\
@@ -528,8 +528,16 @@ ifeq ($(BOARD), ESP32)
 endif
 ifeq ($(BOARD), LOPY)
     APP_BIN = $(BUILD)/lopy.bin
+	CFLAGS += -DESP32_GENERIC -DHELTEC
+# set FLASH size set by make parameter.
+	ifeq ($(FLASH_SIZE), 8MB)
+		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x800000
+	endif
+	ifeq ($(FLASH_SIZE), 4MB)
+		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x400000
+	endif
 endif
-ifeq ($(BOARD), LOPY4)
+ifeq ($(BOARD), LOPY4)  # modification for Heltec boards
     APP_BIN = $(BUILD)/lopy4.bin
     ifeq ($(MOD_SIGFOX_ENABLED), 1)
         $(BUILD)/sigfox/radio_sx127x.o: CFLAGS = $(CFLAGS_SIGFOX)

@@ -45,12 +45,12 @@ void BoardInitMcu( void )
 {
     if( McuInitialized == false )
     {
-    #if defined(LOPY) || defined (FIPY)
-        SpiInit( &SX1272.Spi, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
-        SX1272IoInit( );
-    #elif defined(LOPY4)
+    #if defined(LOPY4) || defined(HELTEC)
         SpiInit( &SX1276.Spi, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
         SX1276IoInit( );
+    #elif defined(LOPY) || defined (FIPY)
+        SpiInit( &SX1272.Spi, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
+        SX1272IoInit( );
     #endif
 
         TimerHwInit( );
@@ -61,12 +61,12 @@ void BoardInitMcu( void )
 
 void BoardDeInitMcu( void )
 {
-#if defined(LOPY) || defined (FIPY)
-    SpiDeInit( &SX1272.Spi );
-    SX1272IoDeInit( );
-#elif defined(LOPY4)
+#if defined(LOPY4) || defined(HELTEC)
     SpiDeInit( &SX1276.Spi );
     SX1276IoDeInit( );
+#elif defined(LOPY) || defined (FIPY)
+    SpiDeInit( &SX1272.Spi );
+    SX1272IoDeInit( );
 #endif
 
     McuInitialized = false;

@@ -188,7 +188,10 @@ SX1276_t SX1276;
 /*!
  * Hardware DIO IRQ callback initialization
  */
-DioIrqHandler *DioIrq[] = { SX1276OnDioIrq };
+// DioIrqHandler *DioIrq[] = { SX1276OnDioIrq };
+DioIrqHandler *DioIrq[] = { SX1276OnDio0Irq, SX1276OnDio1Irq,
+                            SX1276OnDio2Irq, SX1276OnDio3Irq,
+                            SX1276OnDio4Irq, NULL };
 
 /*!
  * Tx and Rx timers
@@ -979,8 +982,8 @@ void SX1276Reset( void )
         // Wait 2 ms
         DelayMs( 2 );
 
-        // Configure RESET as input
-        GpioInit( &SX1276.Reset, RADIO_RESET, PIN_INPUT, PIN_PUSH_PULL, PIN_NO_PULL, 1 );
+        // Set Reset Pin to 1 (previous: Configure RESET as input)
+        GpioInit( &SX1276.Reset, RADIO_RESET, PIN_OUTPUT, PIN_PUSH_PULL, PIN_NO_PULL, 1 );
 
         // Wait 6 ms
         DelayMs( 6 );

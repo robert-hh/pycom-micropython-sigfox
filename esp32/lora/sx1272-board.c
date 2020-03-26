@@ -16,7 +16,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "board.h"
 #include "esp_attr.h"
 
-#if defined(LOPY) || defined (FIPY)
+#if (defined(LOPY) || defined (FIPY)) && !defined(HELTEC)
 
 #include "radio.h"
 #include "sx1272/sx1272.h"

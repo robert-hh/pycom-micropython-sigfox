@@ -87,7 +87,7 @@ void SpiInit( Spi_t *obj, PinNames mosi, PinNames miso, PinNames sclk, PinNames 
                            .bitOrder = SpiBitOrder_MSBFirst, .halfMode = SpiWorkMode_Full};
 #else
     // configure the SPI port
-    spi_attr_t spi_attr = {.mode = SpiMode_Master, .subMode = SpiSubMode_0, .speed = SpiSpeed_10MHz,
+    spi_attr_t spi_attr = {.mode = SpiMode_Master, .subMode = SpiSubMode_0, .speed = SpiSpeed_8MHz,
                            .bitOrder = SpiBitOrder_MSBFirst, .halfMode = SpiWorkMode_Full};
 #endif
     spi_init((uint32_t)obj->Spi, &spi_attr);

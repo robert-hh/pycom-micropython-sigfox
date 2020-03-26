@@ -16,7 +16,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "board.h"
 #include "esp_attr.h"
 
-#if defined(LOPY4)
+#if defined(LOPY4) || defined(HELTEC)
 
 #include "radio.h"
 #include "sx1276/sx1276.h"
@@ -60,18 +60,25 @@ DRAM_ATTR const struct Radio_s Radio =
 void SX1276IoInit( void )
 {
     GpioInit( &SX1276.Spi.Nss, RADIO_NSS, PIN_OUTPUT, PIN_PUSH_PULL, PIN_PULL_UP, 1 );
-    GpioInit( &SX1276.DIO, RADIO_DIO, PIN_INPUT, PIN_PUSH_PULL, PIN_NO_PULL, 0 );
+    GpioInit( &SX1276.Reset, RADIO_RESET, PIN_OUTPUT, PIN_PUSH_PULL, PIN_NO_PULL, 1 );
+    GpioInit( &SX1276.DIO, RADIO_DIO, PIN_INPUT, PIN_PUSH_PULL, PIN_PULL_UP, 0 );
+    GpioInit( &SX1276.DIO1, RADIO_DIO1, PIN_INPUT, PIN_PUSH_PULL, PIN_PULL_UP, 0 );
+    GpioInit( &SX1276.DIO2, RADIO_DIO2, PIN_INPUT, PIN_PUSH_PULL, PIN_PULL_UP, 0 );
 }
 
 void SX1276IoIrqInit( DioIrqHandler **irqHandlers )
 {
     GpioSetInterrupt( &SX1276.DIO, IRQ_RISING_EDGE, IRQ_HIGH_PRIORITY, irqHandlers[0] );
+    GpioSetInterrupt( &SX1276.DIO1, IRQ_RISING_EDGE, IRQ_HIGH_PRIORITY, irqHandlers[1] );
+    GpioSetInterrupt( &SX1276.DIO2, IRQ_RISING_EDGE, IRQ_HIGH_PRIORITY, irqHandlers[2] );
 }
 
 void SX1276IoDeInit( void )
 {
     GpioInit( &SX1276.Spi.Nss, RADIO_NSS, PIN_OUTPUT, PIN_PUSH_PULL, PIN_PULL_UP, 1 );
     GpioInit( &SX1276.DIO, RADIO_DIO, PIN_INPUT, PIN_PUSH_PULL, PIN_NO_PULL, 0 );
+    GpioInit( &SX1276.DIO1, RADIO_DIO1, PIN_INPUT, PIN_PUSH_PULL, PIN_NO_PULL, 0 );
+    GpioInit( &SX1276.DIO2, RADIO_DIO2, PIN_INPUT, PIN_PUSH_PULL, PIN_NO_PULL, 0 );
 }
 
 void SX1276SetRfTxPower( int8_t power )

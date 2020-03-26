@@ -415,7 +415,7 @@ static bool find_active_image(bootloader_state_t *bs, esp_partition_pos_t *parti
         // bootmgr_verify! (so that the changes are not saved to flash)
         ESP_LOGI(TAG, "Checking safe boot pin");
         uint32_t ActiveImg = boot_info->ActiveImg;
-        uint32_t safeboot = wait_for_safe_boot (boot_info, &ActiveImg);
+        uint32_t safeboot = 0; // wait_for_safe_boot (boot_info, &ActiveImg);
         if (safeboot > 0) {
             ESP_LOGI(TAG, "Safe boot requested!");
         }
@@ -432,7 +432,6 @@ static bool find_active_image(bootloader_state_t *bs, esp_partition_pos_t *parti
                 return false;
             }
         }
-
         // load the selected active image
         memcpy(partition, &bs->image[ActiveImg], sizeof(esp_partition_pos_t));
         return true;

@@ -132,6 +132,10 @@ void pin_init0(void) {
             if (self == &PIN_MODULE_P5 || self == &PIN_MODULE_P6 || self == &PIN_MODULE_P7) {
                continue;
             }
+        #elif defined(HELTEC)
+            if (self == &PIN_MODULE_P23 || self == &PIN_MODULE_P17 || self == &PIN_MODULE_P18) {
+               continue;
+            }
         #endif
             /* exclude the antenna switch pin from initialization as it is already initialized */
             if((micropy_hw_antenna_diversity_pin_num == MICROPY_SECOND_GEN_ANT_SELECT_PIN_NUM) && (self == &PIN_MODULE_P12))
@@ -344,6 +348,32 @@ STATIC IRAM_ATTR void machpin_intr_process (void* arg) {
         // clear the interrupt
         SET_PERI_REG_MASK(GPIO_STATUS_W1TC_REG, (1 << micropy_lpwan_dio_pin_num));
     }
+#ifdef HELTEC
+    mask = micropy_lpwan_dio1_pin_num - 32;
+    if (gpio_intr_status_h & mask) {
+        if(((pin_obj_t *)micropy_lpwan_dio1_pin)->handler != NULL)
+        {
+            ((void(*)(void))((pin_obj_t *)micropy_lpwan_dio1_pin)->handler)();
+        }
+
+        // clear this bit from the interrupt status
+        gpio_intr_status_h &= ~mask;
+        // clear the interrupt
+        SET_PERI_REG_MASK(GPIO_STATUS1_W1TC_REG, mask);
+    }
+    mask = micropy_lpwan_dio2_pin_num - 32;
+    if (gpio_intr_status_h & mask) {
+        if(((pin_obj_t *)micropy_lpwan_dio2_pin)->handler != NULL)
+        {
+            ((void(*)(void))((pin_obj_t *)micropy_lpwan_dio2_pin)->handler)();
+        }
+
+        // clear this bit from the interrupt status
+        gpio_intr_status_h &= ~mask;
+        // clear the interrupt
+        SET_PERI_REG_MASK(GPIO_STATUS1_W1TC_REG, mask);
+    }
+#endif    
 #endif
 
     mask = 1;

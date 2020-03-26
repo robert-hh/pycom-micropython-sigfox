@@ -43,7 +43,10 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "lora/system/spi.h"
 #include "lora/system/delay.h"
 #include "radio.h"
-#if defined(LOPY) || defined (FIPY)
+#if defined(HELTEC)
+#include "sx1276/sx1276.h"
+#include "sx1276-board.h"
+#elif defined(LOPY) || defined (FIPY)
 #include "sx1272/sx1272.h"
 #include "sx1272-board.h"
 #elif defined(LOPY4)
@@ -72,6 +75,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define RADIO_NSS                                   micropy_lpwan_ncs_pin_index
 
 #define RADIO_DIO                                   micropy_lpwan_dio_pin_index
+#define RADIO_DIO1                                  micropy_lpwan_dio1_pin_index
+#define RADIO_DIO2                                  micropy_lpwan_dio2_pin_index
 #endif
 
 void BoardInitPeriph( void );

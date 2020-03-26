@@ -31,13 +31,15 @@ DEFINE CONSTANTS
 /******************************************************************************
 DEFINE PRIVATE DATA
 ******************************************************************************/
+#ifndef ESP32_GENERIC
 static antenna_type_t antenna_type_selected = ANTENNA_TYPE_INTERNAL;
-
+#endif
 /******************************************************************************
 DEFINE PUBLIC FUNCTIONS
 ******************************************************************************/
 void antenna_init0(void) {
     // the second gen modules have a pull-down to select the internal antenna by default
+#ifndef ESP32_GENERIC
     if (micropy_hw_antenna_diversity_pin_num == MICROPY_FIRST_GEN_ANT_SELECT_PIN_NUM) {
         gpio_config_t gpioconf = {.pin_bit_mask = 1ull << micropy_hw_antenna_diversity_pin_num,
                                   .mode = GPIO_MODE_OUTPUT,
@@ -49,9 +51,12 @@ void antenna_init0(void) {
         // select the currently active antenna
         antenna_select(ANTENNA_TYPE_INTERNAL);
     }
+#endif    
 }
 
 void antenna_select (antenna_type_t _antenna) {
+
+#ifndef ESP32_GENERIC
     static bool init_done = false;
 
     if (micropy_hw_antenna_diversity_pin_num < 32) {
@@ -96,6 +101,7 @@ void antenna_select (antenna_type_t _antenna) {
         }
     }
     antenna_type_selected = _antenna;
+#endif
 }
 
 void antenna_validate_antenna (uint8_t antenna) {
