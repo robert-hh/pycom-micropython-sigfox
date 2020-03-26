@@ -95,6 +95,14 @@ uint32_t micropy_lpwan_dio_pin_num;
 uint32_t micropy_lpwan_dio_pin_index;
 void * micropy_lpwan_dio_pin;
 
+uint32_t micropy_lpwan_dio1_pin_num;
+uint32_t micropy_lpwan_dio1_pin_index;
+void * micropy_lpwan_dio1_pin;
+
+uint32_t micropy_lpwan_dio2_pin_num;
+uint32_t micropy_lpwan_dio2_pin_index;
+void * micropy_lpwan_dio2_pin;
+
 uint32_t micropy_lpwan_ncs_pin_num;
 uint32_t micropy_lpwan_ncs_pin_index;
 void * micropy_lpwan_ncs_pin;
@@ -166,6 +174,28 @@ void app_main(void) {
     // printf("SPI RAM size : 0x%x\n", esp32_get_spiram_size());
     // printf("Reported Chip revision : %d\n", esp32_get_chip_rev());
 
+#if defined(HELTEC)
+    micropy_lpwan_ncs_pin_index = 1;  // pin index überprüfen
+    micropy_lpwan_ncs_pin_num = 18;
+    micropy_lpwan_ncs_pin = &pin_GPIO18;
+
+    micropy_lpwan_reset_pin_index = 0;
+    micropy_lpwan_reset_pin_num = 14;
+    micropy_lpwan_reset_pin = &pin_GPIO14;
+    micropy_lpwan_use_reset_pin = true;
+
+    micropy_lpwan_dio_pin_index = 2;
+    micropy_lpwan_dio_pin_num = 26;
+    micropy_lpwan_dio_pin = &pin_GPIO26;
+
+    micropy_lpwan_dio1_pin_index = 6;
+    micropy_lpwan_dio1_pin_num = 35;
+    micropy_lpwan_dio1_pin = &pin_GPI35;
+
+    micropy_lpwan_dio2_pin_index = 7;
+    micropy_lpwan_dio2_pin_num = 34;
+    micropy_lpwan_dio2_pin = &pin_GPI34;
+#else
 #ifndef ESP32_GENERIC
     if (esp32_get_chip_rev() > 0) {
         micropy_hw_antenna_diversity_pin_num = MICROPY_SECOND_GEN_ANT_SELECT_PIN_NUM;
@@ -195,6 +225,7 @@ void app_main(void) {
         micropy_lpwan_dio_pin_num = 23;
         micropy_lpwan_dio_pin = &pin_GPIO23;
     }
+#endif
 #endif
 
     if (esp32_get_spiram_size() >= 4194304) {

@@ -123,6 +123,8 @@ typedef struct SX1276_s
 {
     Gpio_t        Reset;
     Gpio_t        DIO;
+    Gpio_t        DIO1;
+    Gpio_t        DIO2;
     Spi_t         Spi;
     RadioSettings_t Settings;
     uint32_t      irqFlags;
