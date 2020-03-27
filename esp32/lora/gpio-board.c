@@ -30,6 +30,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "board.h"
 #include "pins.h"
 
+#if defined HELTEC
 pin_obj_t *gpio_board_map[NBR_GP_PINS] = {
         &pin_GPIO14,
         &pin_GPIO18,
@@ -40,7 +41,16 @@ pin_obj_t *gpio_board_map[NBR_GP_PINS] = {
         &pin_GPI35,
         &pin_GPI34,
 };
-
+#else
+pin_obj_t *gpio_board_map[NBR_GP_PINS] = {
+        &pin_GPIO17,
+        &pin_GPIO18,
+        &pin_GPIO23,
+        &pin_GPIO5,
+        &pin_GPIO27,
+        &pin_GPIO19,
+};
+#endif
 /*!
  * \brief Initializes the given GPIO object
  *
