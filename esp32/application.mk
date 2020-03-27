@@ -312,7 +312,7 @@ APP_ETHERNET_SRC_C = $(addprefix mods/,\
 	)
 
 APP_SX1272_SRC_C = $(addprefix drivers/sx127x/,\
-	sx1276/sx1276.c \
+	sx1272/sx1272.c \
 	)
 
 APP_SX1276_SRC_C = $(addprefix drivers/sx127x/,\
@@ -391,6 +391,9 @@ OBJ = $(PY_O)
 ifeq ($(BOARD), $(filter $(BOARD), LOPY FIPY))
 OBJ += $(addprefix $(BUILD)/, $(APP_LORA_SRC_C:.c=.o) $(APP_LIB_LORA_SRC_C:.c=.o) $(APP_SX1272_SRC_C:.c=.o) $(APP_MODS_LORA_SRC_C:.c=.o))
 endif
+ifeq ($(BOARD), HELTEC)
+OBJ += $(addprefix $(BUILD)/, $(APP_LORA_SRC_C:.c=.o) $(APP_LIB_LORA_SRC_C:.c=.o) $(APP_SX1276_SRC_C:.c=.o) $(APP_MODS_LORA_SRC_C:.c=.o))
+endif
 ifeq ($(BOARD), $(filter $(BOARD), LOPY4))
 OBJ += $(addprefix $(BUILD)/, $(APP_LORA_SRC_C:.c=.o) $(APP_LIB_LORA_SRC_C:.c=.o) $(APP_SX1276_SRC_C:.c=.o) $(APP_MODS_LORA_SRC_C:.c=.o))
 endif
@@ -410,7 +413,7 @@ endif
 
 # add OPENTHREAD code only if flag enabled and for LOPY, LOPY4 and FIPY
 ifeq ($(OPENTHREAD), on)
-ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY))
+ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY HELTEC))
 OBJ += $(addprefix $(BUILD)/, $(APP_LORA_OPENTHREAD_SRC_C:.c=.o) $(APP_MOD_MESH_SRC_C:.c=.o))
 endif
 endif # ifeq ($(OPENTHREAD), on)
@@ -437,7 +440,7 @@ BOOT_OBJ = $(addprefix $(BUILD)/, $(BOOT_SRC_C:.c=.o))
 
 # List of sources for qstr extraction
 SRC_QSTR += $(APP_MODS_SRC_C) $(APP_UTIL_SRC_C) $(APP_STM_SRC_C) $(APP_LIB_SRC_C)
-ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY))
+ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY HELTEC))
 SRC_QSTR += $(APP_MODS_LORA_SRC_C)
 endif
 ifeq ($(BOARD), $(filter $(BOARD), SIPY LOPY4 FIPY))
@@ -450,7 +453,7 @@ SRC_QSTR += $(APP_MODS_LTE_SRC_C)
 endif
 
 ifeq ($(OPENTHREAD), on)
-ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY))
+ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY HELTEC))
 SRC_QSTR += $(APP_MOD_MESH_SRC_C)
 endif
 endif # ifeq ($(OPENTHREAD), on)
@@ -526,9 +529,9 @@ ifeq ($(BOARD), ESP32)
 		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x400000
 	endif
 endif
-ifeq ($(BOARD), LOPY)
-    APP_BIN = $(BUILD)/lopy.bin
-	CFLAGS += -DESP32_GENERIC -DHELTEC
+ifeq ($(BOARD), HELTEC)
+    APP_BIN = $(BUILD)/heltec.bin
+	CFLAGS += -DESP32_GENERIC -DHELTEC -DLOPY
 # set FLASH size set by make parameter.
 	ifeq ($(FLASH_SIZE), 8MB)
 		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x800000
@@ -536,6 +539,9 @@ ifeq ($(BOARD), LOPY)
 	ifeq ($(FLASH_SIZE), 4MB)
 		CFLAGS += -DMICROPY_HW_FLASH_SIZE=0x400000
 	endif
+endif
+ifeq ($(BOARD), LOPY)
+    APP_BIN = $(BUILD)/lopy.bin
 endif
 ifeq ($(BOARD), LOPY4)  # modification for Heltec boards
     APP_BIN = $(BUILD)/lopy4.bin

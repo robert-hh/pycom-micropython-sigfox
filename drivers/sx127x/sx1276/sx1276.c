@@ -100,10 +100,12 @@ void SX1276SetOpMode( uint8_t opMode );
  * SX1276 DIO IRQ callback functions prototype
  */
 
+#if ! defined(HELTEC)
 /*!
  * \brief Common DIO IRQ callback
  */
 static void SX1276OnDioIrq (void);
+#endif
 
 /*!
  * \brief DIO 0 IRQ callback
@@ -188,11 +190,13 @@ SX1276_t SX1276;
 /*!
  * Hardware DIO IRQ callback initialization
  */
-// DioIrqHandler *DioIrq[] = { SX1276OnDioIrq };
+#if ! defined(HELTEC)
+DioIrqHandler *DioIrq[] = { SX1276OnDioIrq };
+#else
 DioIrqHandler *DioIrq[] = { SX1276OnDio0Irq, SX1276OnDio1Irq,
                             SX1276OnDio2Irq, SX1276OnDio3Irq,
                             SX1276OnDio4Irq, NULL };
-
+#endif
 /*!
  * Tx and Rx timers
  */
@@ -1197,6 +1201,7 @@ IRAM_ATTR void SX1276RadioFlagsIrq (void) {
     }
 }
 
+#if ! defined(HELTEC)
 static IRAM_ATTR void SX1276OnDioIrq (void) {
     if (SX1276.Settings.State > RF_IDLE) {
         // read the the irq flags registers
@@ -1224,6 +1229,7 @@ static IRAM_ATTR void SX1276OnDioIrq (void) {
         }
     }
 }
+#endif
 
 IRAM_ATTR void SX1276OnDio0Irq( void )
 {
