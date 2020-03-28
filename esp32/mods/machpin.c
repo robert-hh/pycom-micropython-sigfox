@@ -132,12 +132,9 @@ void pin_init0(void) {
             if (self == &PIN_MODULE_P5 || self == &PIN_MODULE_P6 || self == &PIN_MODULE_P7) {
                continue;
             }
-        #elif defined(HELTEC)
-            if (self == &PIN_MODULE_P23 || self == &PIN_MODULE_P17 || self == &PIN_MODULE_P18) {
-               continue;
-            }
         #endif
             /* exclude the antenna switch pin from initialization as it is already initialized */
+#ifndef ESP32_GENERIC
             if((micropy_hw_antenna_diversity_pin_num == MICROPY_SECOND_GEN_ANT_SELECT_PIN_NUM) && (self == &PIN_MODULE_P12))
             {
                 continue;
@@ -148,7 +145,8 @@ void pin_init0(void) {
             {
                 continue;
             }
-#endif
+#endif // #ifndef RGB_LED_DISABLE
+#endif // #ifndef ESP32_GENERIC
             pin_config(self, -1, -1, GPIO_MODE_INPUT, MACHPIN_PULL_DOWN, 0);
         }
     }
