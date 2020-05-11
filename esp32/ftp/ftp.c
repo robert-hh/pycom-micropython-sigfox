@@ -344,26 +344,31 @@ STATIC FRESULT f_readdir_helper(ftp_dir_t *dp, ftp_fileinfo_t *fno ) {
                 }
                 char* file_relative_path = malloc(path_length);
 
-                // Copy the current working directory (relative path)
-                memcpy(file_relative_path, path_relative, length_of_relative_path);
+                if (file_relative_path) {
 
-                // Append the "/" at the end of current working directory path if needed
-                if(length_of_relative_path > 1) {
-                    memcpy(&file_relative_path[length_of_relative_path], "/", 1);
-                    // Modify the length of relative path to include the closing "/"
-                    length_of_relative_path++;
+                    // Copy the current working directory (relative path)
+                    memcpy(file_relative_path, path_relative, length_of_relative_path);
+
+                    // Append the "/" at the end of current working directory path if needed
+                    if(length_of_relative_path > 1) {
+                        memcpy(&file_relative_path[length_of_relative_path], "/", 1);
+                        // Modify the length of relative path to include the closing "/"
+                        length_of_relative_path++;
+                    }
+                    // Copy the name of the file after the current working directory, this will copy the closing /0
+                    strcpy(&file_relative_path[length_of_relative_path], fno->u.fpinfo_lfs.info.name);
+
+                    int lfs_getattr_ret = lfs_getattr(&littlefs->lfs, file_relative_path, LFS_ATTRIBUTE_TIMESTAMP, &fno->u.fpinfo_lfs.timestamp, sizeof(lfs_timestamp_attribute_t));
+                    // If no timestamp is saved for this entry, fill it with 0
+                    if(lfs_getattr_ret < LFS_ERR_OK) {
+                        fno->u.fpinfo_lfs.timestamp.fdate = 0;
+                        fno->u.fpinfo_lfs.timestamp.ftime = 0;
+                    }
+
+                    free(file_relative_path);
+                } else {
+                    lfs_ret = LFS_ERR_IO;
                 }
-                // Copy the name of the file after the current working directory, this will copy the closing /0
-                strcpy(&file_relative_path[length_of_relative_path], fno->u.fpinfo_lfs.info.name);
-
-                int lfs_getattr_ret = lfs_getattr(&littlefs->lfs, file_relative_path, LFS_ATTRIBUTE_TIMESTAMP, &fno->u.fpinfo_lfs.timestamp, sizeof(lfs_timestamp_attribute_t));
-                // If no timestamp is saved for this entry, fill it with 0
-                if(lfs_getattr_ret < LFS_ERR_OK) {
-                    fno->u.fpinfo_lfs.timestamp.fdate = 0;
-                    fno->u.fpinfo_lfs.timestamp.ftime = 0;
-                }
-
-                free(file_relative_path);
             }
 
         xSemaphoreGive(littlefs->mutex);
