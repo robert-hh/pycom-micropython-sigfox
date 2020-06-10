@@ -1014,9 +1014,7 @@ STATIC const mp_map_elem_t mp_module_usocket_globals_table[] = {
 
     { MP_OBJ_NEW_QSTR(MP_QSTR_SOCK_STREAM),     MP_OBJ_NEW_SMALL_INT(SOCK_STREAM) },
     { MP_OBJ_NEW_QSTR(MP_QSTR_SOCK_DGRAM),      MP_OBJ_NEW_SMALL_INT(SOCK_DGRAM) },
-#if defined (LOPY) || defined (SIPY) || defined (LOPY4) || defined(FIPY)
     { MP_OBJ_NEW_QSTR(MP_QSTR_SOCK_RAW),        MP_OBJ_NEW_SMALL_INT(SOCK_RAW) },
-#endif
 
     { MP_OBJ_NEW_QSTR(MP_QSTR_IPPROTO_IP),      MP_OBJ_NEW_SMALL_INT(IPPROTO_IP)  },
     { MP_OBJ_NEW_QSTR(MP_QSTR_IPPROTO_ICMP),    MP_OBJ_NEW_SMALL_INT(IPPROTO_ICMP)},
