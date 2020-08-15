@@ -52,7 +52,6 @@ DRAM_ATTR const struct Radio_s Radio =
     SX1276SetMaxPayloadLength,
     SX1276SetPublicNetwork,
     SX1276Reset
-
 };
 
 /*!

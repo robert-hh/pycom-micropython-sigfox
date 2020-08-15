@@ -411,4 +411,9 @@ void SX1276SetPublicNetwork( bool enable );
  */
 void SX1276Reset( void );
 
+/*!
+ * \brief Resets the SX1276
+ */
+void SX1276Reset( void );
+
 #endif // __SX1276_H__
