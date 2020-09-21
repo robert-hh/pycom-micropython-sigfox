@@ -23,6 +23,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 #ifdef HELTEC  // The heltec device ses an XTAL, therefore REG_LR_TCXO -> 0x09
 #define REG_LR_TCXO_DEFAULT 0x09
+// #define REG_LR_TCXO_DEFAULT 0x19  // Trial for TTGO LORA32 V2.1
 #else // Pycom device use an TCXO, therefore REG_LR_TCXO must be set to 0x19
 #define REG_LR_TCXO_DEFAULT 0x19
 #endif
