@@ -141,7 +141,7 @@ class Pins:
                 pin = Pin(row[pinname_col], pin_num)
                 # FIXME: hack to force the SX127x pins to be available
                 if os.getenv("BOARD") in ("LOPY", "HELTEC"):  # For the HELTEC wireless LORA boards
-                    if row[pinname_col] in ('GPIO14', 'GPIO18', 'GPIO26'):
+                    if row[pinname_col] in ('GPIO23', 'GPIO18', 'GPIO26'):
                         pin.board_pin = True
                 else:
                     if row[pinname_col] == 'GPIO17' or row[pinname_col] == 'GPIO18' or row[pinname_col] == 'GPIO23':

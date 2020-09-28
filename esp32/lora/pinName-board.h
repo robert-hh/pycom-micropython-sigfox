@@ -35,7 +35,7 @@ Maintainer: Miguel Luis and Gregory Cristian
  */
 #if defined(HELTEC)
     #define MCU_PINS \
-        GPIO14 = 0, GPIO18, GPIO26, GPIO5, GPIO27, GPIO19, GPI35, GPI34, NBR_GP_PINS
+        GPIO23 = 0, GPIO18, GPIO26, GPIO5, GPIO27, GPIO19, GPIO33, GPIO32, NBR_GP_PINS
 #else
     #define MCU_PINS \
         GPIO17 = 0, GPIO18, GPIO23, GPIO5, GPIO27, GPIO19, NBR_GP_PINS

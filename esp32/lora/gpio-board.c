@@ -32,14 +32,14 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 #if defined HELTEC
 pin_obj_t *gpio_board_map[NBR_GP_PINS] = {
-        &pin_GPIO14,
+        &pin_GPIO23,
         &pin_GPIO18,
         &pin_GPIO26,
         &pin_GPIO5,
         &pin_GPIO27,
         &pin_GPIO19,
-        &pin_GPI35,
-        &pin_GPI34,
+        &pin_GPIO33,
+        &pin_GPIO32,
 };
 #else
 pin_obj_t *gpio_board_map[NBR_GP_PINS] = {
