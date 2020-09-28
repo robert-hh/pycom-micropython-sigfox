@@ -180,8 +180,8 @@ void app_main(void) {
     micropy_lpwan_ncs_pin = &pin_GPIO18;
 
     micropy_lpwan_reset_pin_index = 0;
-    micropy_lpwan_reset_pin_num = 14;
-    micropy_lpwan_reset_pin = &pin_GPIO14;
+    micropy_lpwan_reset_pin_num = 23;
+    micropy_lpwan_reset_pin = &pin_GPIO23;
     micropy_lpwan_use_reset_pin = true;
 
     micropy_lpwan_dio_pin_index = 2;
@@ -189,12 +189,12 @@ void app_main(void) {
     micropy_lpwan_dio_pin = &pin_GPIO26;
 
     micropy_lpwan_dio1_pin_index = 6;
-    micropy_lpwan_dio1_pin_num = 35;
-    micropy_lpwan_dio1_pin = &pin_GPI35;
+    micropy_lpwan_dio1_pin_num = 33;
+    micropy_lpwan_dio1_pin = &pin_GPIO33;
 
     micropy_lpwan_dio2_pin_index = 7;
-    micropy_lpwan_dio2_pin_num = 34;
-    micropy_lpwan_dio2_pin = &pin_GPI34;
+    micropy_lpwan_dio2_pin_num = 32;
+    micropy_lpwan_dio2_pin = &pin_GPIO32;
 #else
 #ifndef ESP32_GENERIC
     if (esp32_get_chip_rev() > 0) {
