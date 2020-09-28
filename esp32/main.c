@@ -174,7 +174,7 @@ void app_main(void) {
     // printf("SPI RAM size : 0x%x\n", esp32_get_spiram_size());
     // printf("Reported Chip revision : %d\n", esp32_get_chip_rev());
 
-#if defined(HELTEC)
+#if defined(TTGO)
     micropy_lpwan_ncs_pin_index = 1;  // pin index überprüfen
     micropy_lpwan_ncs_pin_num = 18;
     micropy_lpwan_ncs_pin = &pin_GPIO18;

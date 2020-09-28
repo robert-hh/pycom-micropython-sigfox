@@ -346,7 +346,7 @@ STATIC IRAM_ATTR void machpin_intr_process (void* arg) {
         // clear the interrupt
         SET_PERI_REG_MASK(GPIO_STATUS_W1TC_REG, (1 << micropy_lpwan_dio_pin_num));
     }
-#ifdef HELTEC
+#ifdef TTGO
     mask = micropy_lpwan_dio1_pin_num - 32;
     if (gpio_intr_status_h & mask) {
         if(((pin_obj_t *)micropy_lpwan_dio1_pin)->handler != NULL)

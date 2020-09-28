@@ -123,7 +123,7 @@ typedef struct SX1276_s
 {
     Gpio_t        Reset;
     Gpio_t        DIO;
-#if defined(HELTEC)    
+#if defined(TTGO)    
     Gpio_t        DIO1;
     Gpio_t        DIO2;
 #endif

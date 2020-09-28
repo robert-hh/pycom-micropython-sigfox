@@ -16,7 +16,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "board.h"
 #include "esp_attr.h"
 
-#if defined(LOPY4) || defined(HELTEC)
+#if defined(LOPY4) || defined(TTGO)
 
 #include "radio.h"
 #include "sx1276/sx1276.h"

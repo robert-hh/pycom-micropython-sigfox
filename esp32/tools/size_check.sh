@@ -22,7 +22,7 @@ if ! [ $0 = "tools/size_check.sh" ]; then
 fi
 
 #Check Board Type
-if [ "${BOARD}" != "WIPY" -a "${BOARD}" != "ESP32" -a "${BOARD}" != "SIPY" -a "${BOARD}" != "LOPY" -a "${BOARD}" != "HELTEC" -a "${BOARD}" != "LOPY4" -a "${BOARD}" != "GPY" -a "${BOARD}" != "FIPY" ] ; then
+if [ "${BOARD}" != "WIPY" -a "${BOARD}" != "ESP32" -a "${BOARD}" != "SIPY" -a "${BOARD}" != "LOPY" -a "${BOARD}" != "TTGO" -a "${BOARD}" != "LOPY4" -a "${BOARD}" != "GPY" -a "${BOARD}" != "FIPY" ] ; then
   echo "Invalid Board name for MPY build!" >&2
   exit 1
 fi

@@ -45,7 +45,7 @@ void BoardInitMcu( void )
 {
     if( McuInitialized == false )
     {
-    #if defined(LOPY4) || defined(HELTEC)
+    #if defined(LOPY4) || defined(TTGO)
         SpiInit( &SX1276.Spi, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
         SX1276IoInit( );
     #elif defined(LOPY) || defined (FIPY)
@@ -61,7 +61,7 @@ void BoardInitMcu( void )
 
 void BoardDeInitMcu( void )
 {
-#if defined(LOPY4) || defined(HELTEC)
+#if defined(LOPY4) || defined(TTGO)
     SpiDeInit( &SX1276.Spi );
     SX1276IoDeInit( );
 #elif defined(LOPY) || defined (FIPY)

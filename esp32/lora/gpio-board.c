@@ -30,7 +30,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "board.h"
 #include "pins.h"
 
-#if defined HELTEC
+#if defined TTGO
 pin_obj_t *gpio_board_map[NBR_GP_PINS] = {
         &pin_GPIO23,
         &pin_GPIO18,

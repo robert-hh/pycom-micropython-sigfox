@@ -44,7 +44,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "lora/system/delay.h"
 #include "radio.h"
 
-#if defined(LOPY4) || defined(HELTEC)
+#if defined(LOPY4) || defined(TTGO)
 #include "sx1276/sx1276.h"
 #include "sx1276-board.h"
 #elif defined(LOPY) || defined (FIPY)
@@ -64,7 +64,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 /*!
  * Board MCU pins definitions
  */
-#if defined(LOPY) || defined(LOPY4) || defined(FIPY) || defined(HELTEC)
+#if defined(LOPY) || defined(LOPY4) || defined(FIPY) || defined(TTGO)
 #define RADIO_RESET                                 micropy_lpwan_reset_pin_index
 
 #define RADIO_MOSI                                  GPIO27

@@ -140,7 +140,7 @@ class Pins:
                     raise ValueError("Invalid pin number {:s} in row {:s}".format(row[pin_col]), row)
                 pin = Pin(row[pinname_col], pin_num)
                 # FIXME: hack to force the SX127x pins to be available
-                if os.getenv("BOARD") in ("LOPY", "HELTEC"):  # For the HELTEC wireless LORA boards
+                if os.getenv("BOARD") in ("LOPY", "TTGO"):  # For the TTGO wireless LORA boards
                     if row[pinname_col] in ('GPIO23', 'GPIO18', 'GPIO26'):
                         pin.board_pin = True
                 else:

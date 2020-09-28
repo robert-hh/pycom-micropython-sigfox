@@ -33,7 +33,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 /*!
  * ESP32 Pin Names
  */
-#if defined(HELTEC)
+#if defined(TTGO)
     #define MCU_PINS \
         GPIO23 = 0, GPIO18, GPIO26, GPIO5, GPIO27, GPIO19, GPIO33, GPIO32, NBR_GP_PINS
 #else
