@@ -46,7 +46,11 @@ else
 fi
 
 echo "Creating release package in ${RELEASE_DIR}"
-BOARD_NAME=$(echo $1 | tr '[IOY]' '[ioy]')
+if [ "${BOARD}" = "TTGO" ]; then
+    BOARD_NAME=$1
+else
+    BOARD_NAME=$(echo $1 | tr '[IOY]' '[ioy]')
+fi
 BOARD_NAME_L=$(echo ${BOARD_NAME} | tr '[A-Z]' '[a-z]')
 VERSION=$(cat pycom_version.h |grep SW_VERSION_NUMBER | cut -d'"' -f2)
 PKG_TMP_DIR="${BUILD_DIR}/firmware_package"
