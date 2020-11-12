@@ -16,7 +16,8 @@ endif
 
 # IDF_HASH=6ec081c
 # IDF_HASH=b39468b
-IDF_HASH=c61fe64
+# IDF_HASH=c61fe64
+IDF_HASH=3394ee5
 
 TARGET ?= boot_app
 
