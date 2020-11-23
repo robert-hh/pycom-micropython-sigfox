@@ -779,6 +779,7 @@ class PybytesProtocol:
 
             customManifest = {
                 "firmware": {
+<<<<<<< HEAD
                     "URL": "https://{}/manifest.json?sysname={}&wmac={}&ota_slot={}&fwtype={}&target_ver={}&download=true".format(
                         constants.__DEFAULT_SW_HOST,
                         os.uname().sysname,
@@ -789,6 +790,15 @@ class PybytesProtocol:
                 }
             }
             print_debug(5, "Custom Manifest: {}".format(customManifest))
+=======
+                    "URL": "https://{}/findupgrade?redirect=true&strict=true&type={}&model={}&version={}&download=true".format(
+                        constants.__DEFAULT_SW_HOST,
+                        fw_type,
+                        os.uname().sysname,
+                        version),
+                }
+            }
+>>>>>>> 6e2ff294... Update Pybytes to version 1.6.1
             self.write_firmware(customManifest)
         else:
             fileUrl = '{}://{}/firmware?'.format(constants.__DEFAULT_PYCONFIG_PROTOCOL, constants.__DEFAULT_PYCONFIG_DOMAIN)
