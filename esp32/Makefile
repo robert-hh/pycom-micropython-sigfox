@@ -36,7 +36,7 @@ PYGATE_ENABLED ?= 0
 MOD_COAP_ENABLED ?= 1
 
 # LORA is enabled by default for supported boards
-ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY))
+ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY HELTEC))
 MOD_LORA_ENABLED ?= 1
 else
 MOD_LORA_ENABLED ?= 0

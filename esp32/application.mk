@@ -393,14 +393,7 @@ ifeq ($(MOD_LORA_ENABLED), 1)
 ifeq ($(BOARD), $(filter $(BOARD), LOPY FIPY))
 OBJ += $(addprefix $(BUILD)/, $(APP_LORA_SRC_C:.c=.o) $(APP_LIB_LORA_SRC_C:.c=.o) $(APP_SX1272_SRC_C:.c=.o) $(APP_MODS_LORA_SRC_C:.c=.o))
 endif
-<<<<<<< HEAD
-
-=======
-ifeq ($(BOARD), HELTEC)
-OBJ += $(addprefix $(BUILD)/, $(APP_LORA_SRC_C:.c=.o) $(APP_LIB_LORA_SRC_C:.c=.o) $(APP_SX1276_SRC_C:.c=.o) $(APP_MODS_LORA_SRC_C:.c=.o))
-endif
->>>>>>> heltec: Add a HELTEC board definition
-ifeq ($(BOARD), $(filter $(BOARD), LOPY4))
+ifeq ($(BOARD), $(filter $(BOARD), LOPY4 HELTEC))
 OBJ += $(addprefix $(BUILD)/, $(APP_LORA_SRC_C:.c=.o) $(APP_LIB_LORA_SRC_C:.c=.o) $(APP_SX1276_SRC_C:.c=.o) $(APP_MODS_LORA_SRC_C:.c=.o))
 endif
 
@@ -459,13 +452,8 @@ OBJ += $(BUILD)/pins.o
 BOOT_OBJ = $(addprefix $(BUILD)/, $(BOOT_SRC_C:.c=.o))
 
 # List of sources for qstr extraction
-<<<<<<< HEAD
-SRC_QSTR += $(APP_MODS_SRC_C) $(APP_UTIL_SRC_C) $(APP_STM_SRC_C) $(APP_LIB_SRC_C) $(SRC_MOD) 
-ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY))
-=======
 SRC_QSTR += $(APP_MODS_SRC_C) $(APP_UTIL_SRC_C) $(APP_STM_SRC_C) $(APP_LIB_SRC_C)
 ifeq ($(BOARD), $(filter $(BOARD), LOPY LOPY4 FIPY HELTEC))
->>>>>>> heltec: Add a HELTEC board definition
 SRC_QSTR += $(APP_MODS_LORA_SRC_C)
 endif
 ifeq ($(BOARD), $(filter $(BOARD), SIPY LOPY4 FIPY))
