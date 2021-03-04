@@ -89,11 +89,11 @@ void mperror_init0 (void) {
     // configure the heartbeat led pin
     pin_config(&pin_GPIO0, -1, -1, GPIO_MODE_OUTPUT, MACHPIN_PULL_NONE, 0);
     led_init(&led_info);
-    led_info.color.value = 0;
+    led_info.color.value = MPERROR_HEARTBEAT_COLOR;
     led_set_color(&led_info, false, false);
     mperror_heart_beat.on_time = 0;
     mperror_heart_beat.off_time = 0;
-    mperror_heart_beat.beating = false;
+    mperror_heart_beat.beating = true;
     mperror_heart_beat.enabled = (config_get_heartbeat_on_boot()) ? true : false;
     mperror_heart_beat.do_disable = (config_get_heartbeat_on_boot()) ? false : true;
 }
