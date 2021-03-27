@@ -16,6 +16,8 @@
 
 #define DEFAULT_AP_SSID                                         "esp32-wlan"
 
+#define RGB_LED_DISABLE                                         (1)
+
 extern uint32_t micropy_hw_flash_size;
 
 extern bool micropy_hw_antenna_diversity;
