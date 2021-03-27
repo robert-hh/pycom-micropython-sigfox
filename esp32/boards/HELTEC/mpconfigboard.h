@@ -16,6 +16,8 @@
 
 #define MICROPY_LPWAN_DIO_PIN
 
+#define RGB_LED_DISABLE                                         (1)
+
 extern uint32_t micropy_hw_flash_size;
 
 extern uint32_t micropy_hw_antenna_diversity_pin_num;

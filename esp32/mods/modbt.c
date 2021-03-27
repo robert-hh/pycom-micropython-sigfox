@@ -1168,19 +1168,18 @@ STATIC mp_obj_t bt_make_new(const mp_obj_type_t *type, mp_uint_t n_args, mp_uint
     mp_arg_val_t args[MP_ARRAY_SIZE(bt_init_args)];
     mp_arg_parse_all(n_args, all_args, &kw_args, MP_ARRAY_SIZE(args), bt_init_args, args);
 
+    // Check SPIRAM alloc availability
+    if (heap_caps_get_free_size(MALLOC_CAP_SPIRAM) == 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_MemoryError,"BLE not available for 512K RAM devices"));
+    }    
     // setup the object
+
     bt_obj_t *self = (bt_obj_t *)&bt_obj;
     self->base.type = (mp_obj_t)&mod_network_nic_type_bt;
 
     // check the peripheral id
     if (args[0].u_int != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError, mpexception_os_resource_not_avaliable));
-    }
-
-    if (args[4].u_obj != MP_OBJ_NULL) {
-       if (heap_caps_get_free_size(MALLOC_CAP_SPIRAM) == 0) {
-          nlr_raise(mp_obj_new_exception_msg(&mp_type_MemoryError,"Secure BLE not available for 512K RAM devices"));
-       }
     }
 
     // run the constructor if the peripehral is not initialized or extra parameters are given
